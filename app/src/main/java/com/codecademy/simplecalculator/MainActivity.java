@@ -40,31 +40,44 @@ public class MainActivity extends AppCompatActivity {
         equals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double firstNumberValue = Double.parseDouble(firstNumber.getText().toString());
-                double secondNumberValue = Double.parseDouble(secondNumber.getText().toString());
-                int operatorButtonId = operators.getCheckedRadioButtonId();
-                Double answer;
-
-
-               if(firstNumber.getText().toString().trim().equalsIgnoreCase("")){
+                boolean boolFirstNumber = false;
+                boolean boolSecondNumber= false;
+                
+                // Try validations first
+                if(firstNumber.getText().toString().trim().equalsIgnoreCase("")){
                    firstNumber.setError("Please enter a number");
-               };
+                   boolFirstNumber = true; 
+                };
                 if(secondNumber.getText().toString().trim().equalsIgnoreCase("")){
                     secondNumber.setError("Please enter a number");
+                    boolSecondNumber = true; 
                 };
 
-                if (operatorButtonId == add.getId()) {
-                    answer = firstNumberValue + secondNumberValue;
-                } else if (operatorButtonId == subtract.getId()) {
-                    answer = firstNumberValue - secondNumberValue;
-                } else if (operatorButtonId == multiply.getId()) {
-                    answer = firstNumberValue * secondNumberValue;
-                } else if (operatorButtonId == divide.getId()) {
-                    answer = firstNumberValue / secondNumberValue;
-                } else {
-                    answer = 0.0;
-                }
-                result.setText(String.valueOf(answer));
+                // Stop/break the function if at least one of the first two conditions returns true
+                if (boolFirstNumber || boolSecondNumber) return;
+
+                // Wrap this function the trusty dandy try/catch so the app doesn't crash.
+                try {
+                    double firstNumberValue = Double.parseDouble(firstNumber.getText().toString());
+                    double secondNumberValue = Double.parseDouble(secondNumber.getText().toString());
+                    int operatorButtonId = operators.getCheckedRadioButtonId();
+                    Double answer;
+
+                    if (operatorButtonId == add.getId()) {
+                        answer = firstNumberValue + secondNumberValue;
+                    } else if (operatorButtonId == subtract.getId()) {
+                        answer = firstNumberValue - secondNumberValue;
+                    } else if (operatorButtonId == multiply.getId()) {
+                        answer = firstNumberValue * secondNumberValue;
+                    } else if (operatorButtonId == divide.getId()) {
+                        answer = firstNumberValue / secondNumberValue;
+                    } else {
+                        answer = 0.0;
+                    }
+                    result.setText(String.valueOf(answer));
+                } catch (Exception e) {
+                   result.setText("An unexpected error occurred.");
+               }
             }
         });
 
