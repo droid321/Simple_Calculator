@@ -45,14 +45,13 @@ public class MainActivity extends AppCompatActivity {
                 int operatorButtonId = operators.getCheckedRadioButtonId();
                 Double answer;
 
-                String firstNumberValue1 = firstNumber.getText().toString();
-                String secondNumberValue2 = secondNumber.getText().toString();
 
-               if(firstNumberValue1.length() >0){
-                   firstNumberValue1.strip("Please enter a number");
-               } else if (secondNumberValue2.length() >0) {
-                   secondNumberValue2.strip("Please enter a number");
-               }
+               if(firstNumber.getText().toString().trim().equalsIgnoreCase("")){
+                   firstNumber.setError("Please enter a number");
+               };
+                if(secondNumber.getText().toString().trim().equalsIgnoreCase("")){
+                    secondNumber.setError("Please enter a number");
+                };
 
                 if (operatorButtonId == add.getId()) {
                     answer = firstNumberValue + secondNumberValue;
